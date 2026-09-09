@@ -1,6 +1,42 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "rust-lang.rust-analyzer",
-  "rust-analyzer.check.command": "clippy",
-  "svelte.enable-ts-plugin": true
+  "svelte.enable-ts-plugin": true,
+
+  // Every cargo run below goes through `direnv exec`, so it inherits the
+  // flake devShell in ../.envrc. That gives the Tauri `-sys` build scripts a
+  // correct PKG_CONFIG_PATH whatever the VS Code session environment holds.
+  // rust-analyzer runs these with the cwd set to src-tauri. `direnv exec .`
+  // searches upward from there and finds the repo-root .envrc. It does not
+  // change directory, so cargo still finds src-tauri/Cargo.toml on its own.
+  //
+  // These two settings replace "rust-analyzer.check.command": "clippy".
+  // With an overrideCommand present, check.command is ignored.
+  "rust-analyzer.cargo.buildScripts.overrideCommand": [
+    "direnv",
+    "exec",
+    ".",
+    "cargo",
+    "check",
+    "--quiet",
+    "--workspace",
+    "--message-format=json",
+    "--all-targets",
+    "--keep-going"
+  ],
+  "rust-analyzer.check.overrideCommand": [
+    "direnv",
+    "exec",
+    ".",
+    "cargo",
+    "clippy",
+    "--workspace",
+    "--message-format=json-diagnostic-rendered-ansi",
+    "--all-targets",
+    "--keep-going"
+  ],
+
+  // Reload the extension host once direnv has read .envrc, so other
+  // extensions also start with the devShell environment.
+  "direnv.restart.automatic": true
 }

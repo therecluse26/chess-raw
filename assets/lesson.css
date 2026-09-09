@@ -1,0 +1,177 @@
+/* Shared stylesheet for all chess-raw lessons and reference documents.
+   Tufte-influenced: generous margins, one measure, sidenotes, no chrome.
+   Every lesson links this file. Do not inline styles in a lesson. */
+
+:root {
+  --ink: #111;
+  --ink-soft: #555;
+  --rule: #d8d4cc;
+  --paper: #fffdf9;
+  --accent: #7a2f1e;
+  --code-bg: #f4f1ea;
+  --good: #1f6b3a;
+  --bad: #9b2226;
+  --measure: 38rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #e8e4dc;
+    --ink-soft: #a9a49a;
+    --rule: #3a3630;
+    --paper: #16150f;
+    --accent: #e08a6a;
+    --code-bg: #221f19;
+    --good: #6bbf8a;
+    --bad: #e0776f;
+  }
+}
+
+html { font-size: 17px; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: et-book, Palatino, "Palatino Linotype", Georgia, serif;
+  line-height: 1.55;
+  margin: 0;
+  padding: 4rem 1.5rem 8rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+main { max-width: var(--measure); margin: 0 auto; }
+
+/* ---- Masthead ---- */
+
+.masthead {
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 .6rem;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 2.1rem;
+  line-height: 1.15;
+  margin: 0 0 .5rem;
+}
+
+.standfirst {
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 0;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 1.4rem;
+  margin: 3rem 0 .8rem;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: .01em;
+  margin: 2rem 0 .5rem;
+}
+
+p, li { font-size: 1.05rem; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+/* ---- Code ---- */
+
+code, pre, .mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+code { font-size: .88em; background: var(--code-bg); padding: .1em .32em; border-radius: 3px; }
+
+pre {
+  background: var(--code-bg);
+  border-left: 3px solid var(--rule);
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-size: .84rem;
+  line-height: 1.5;
+  border-radius: 0 4px 4px 0;
+}
+
+pre code { background: none; padding: 0; font-size: inherit; }
+
+/* ---- Callouts ---- */
+
+.note, .warn, .win {
+  border-left: 3px solid var(--rule);
+  padding: .8rem 1.1rem;
+  margin: 1.6rem 0;
+  font-size: .96rem;
+}
+
+.note { background: color-mix(in srgb, var(--code-bg) 70%, transparent); }
+.warn { border-left-color: var(--bad); }
+.win  { border-left-color: var(--good); }
+
+.callout-label {
+  display: block;
+  font-family: ui-monospace, monospace;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: .35rem;
+}
+
+/* ---- Two-column compare ---- */
+
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.6rem 0; }
+@media (max-width: 40rem) { .compare { grid-template-columns: 1fr; } }
+.compare h3 { margin-top: 0; }
+
+/* ---- Definition table ---- */
+
+table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; font-size: .95rem; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+
+/* ---- Task block ---- */
+
+.task {
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  padding: 1.3rem 1.5rem;
+  margin: 2rem 0;
+}
+.task > :first-child { margin-top: 0; }
+.task > :last-child { margin-bottom: 0; }
+
+/* ---- Footer ---- */
+
+.footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 4rem;
+  padding-top: 1.2rem;
+  color: var(--ink-soft);
+  font-size: .9rem;
+}
+
+.footer ul { padding-left: 1.1rem; }
+
+/* ---- Print ---- */
+
+@media print {
+  :root { --paper: #fff; --ink: #000; --code-bg: #f0f0f0; }
+  body { padding: 0; font-size: 11pt; }
+  .quiz-reveal { display: block !important; }
+  a::after { content: " (" attr(href) ")"; font-size: .75em; color: #555; word-break: break-all; }
+  a[href^="#"]::after { content: ""; }
+}
