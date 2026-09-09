@@ -72,3 +72,25 @@ Keep these. They are gold, because they are his.
 Brad has written neither `log.rs` (lesson 0001) nor `state.rs` (lesson 0002).
 Three lessons are delivered and none are proven. **Do not write lesson 0004
 until code exists.** Ask what he got stuck on instead.
+
+## Session 4 — 2026-09-09
+
+- Brad hit `E0432 unresolved import crate::game`. Root cause: **no `mod game;`**.
+  This is the THIRD time an undeclared module has bitten him (session 1 `chess/`,
+  now `game.rs` + `pieces.rs`). It is his single biggest recurring blocker.
+- Wrote `reference/rust-modules.html`. Point him at it every time, not a re-explanation.
+- **Verified cascade** in his crate (backed up, tested, restored):
+  1. as-is → 1 error, `E0432`
+  2. + `mod game; mod pieces;` → 10 errors, `E0425` cannot find `Color`/`Piece`/`PieceType`
+  3. + `use crate::pieces::…` → `E0603` private ×5, plus `E0277` on
+     `const STARTING_PIECES: [Piece<PieceType>]` (unsized — needs `; 32`)
+- Tell him the error count going UP after a fix is progress. He may read it as damage.
+- Good news: he fixed the `Copy` bug from session 3 himself. `lib.rs` now has
+  `let mut guard = state.lock().unwrap(); guard.counter += 1;`. Correct.
+- He also fixed the type mismatch by making `setup_app_state() -> Mutex<AppState>`
+  line up with `State<'_, Mutex<AppState>>`. He did not use the alias. Do not push
+  it again — his version is type-correct.
+
+### Teaching note
+He learns by building, then hitting a wall, then asking. That is working. Keep
+answers to the wall he hit. Do not bundle the next three lessons into the answer.

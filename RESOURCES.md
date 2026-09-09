@@ -25,6 +25,11 @@ Trusted sources for this mission. Lessons cite these. Verified 2026-09-07.
   <https://doc.rust-lang.org/book/ch18-00-oop.html>
   Why Rust prefers enums over trait objects for closed sets like piece types.
 
+- **The Rust Programming Language, Ch. 7.5: Separating Modules into Files** —
+  <https://doc.rust-lang.org/book/ch07-05-separating-modules-into-different-files.html>
+  A file is not in the crate until `mod` names it. Brad's most frequent blocker.
+  See also 7.2 (privacy) and 7.3 (paths).
+
 - **Rust Design Patterns (unofficial)** —
   <https://rust-unofficial.github.io/patterns/>
   Idiom reference. Use to check a design smells right before committing to it.

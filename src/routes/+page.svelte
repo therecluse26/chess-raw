@@ -1,22 +1,22 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/core";
 
-  let counter = $state(0);
+  let game_state = $state({});
 
-  async function increment(event: Event) {
+  async function show_game_state(event: Event) {
     event.preventDefault();
 
-    counter = await invoke("increment_counter");
+    game_state = await invoke("show_game_state");
   }
 </script>
 
 <main class="container">
   <h1>Welcome to Tauri + Svelte</h1>
 
-  <form class="row" onsubmit={increment}>
-    <button type="submit">Increment</button>
+  <form class="row" onsubmit={show_game_state}>
+    <button type="submit">Show Game State</button>
   </form>
-  <p>{counter}</p>
+  <p>{JSON.stringify(game_state)}</p>
 </main>
 
 <style>
